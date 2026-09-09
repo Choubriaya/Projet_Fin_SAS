@@ -1,5 +1,7 @@
 // importation des modules 
 const prompt = require ('prompt-sync')();
+const tickets =[] ;
+let nextIdTicket = 1 ;
 // données
 const trips = [
     {
@@ -183,59 +185,6 @@ const trips = [
         availableSeats: 50
     }
 ];
-
-const tickets =[] ;
-let nextIdTicket = 1 ;
-
-// Boucle du menu principale et des choix 
-function afficherMenuPrincipal(){
-    while(1){
-       console.log("=================================");
-       console.log("        RAILWAY MANAGER");
-       console.log("=================================");
-       console.log("1. Afficher les trajets");
-       console.log("2. Acheter un ticket");
-       console.log("3. Afficher les tickets");
-       console.log("4. Annuler un ticke");
-       console.log("5. Rechercher un ticket");
-       console.log("6. Filtrer les trajets");
-       console.log("7. Trier les trajets");
-       console.log("0. Quitter");
-    
-    
-    const choix = Number(prompt("Votre choix : "));
-
-    switch(choix){
-        case 1 : 
-            afficheUnTrajet();
-            break ;
-        case 2 : 
-            acheterTicket() ;
-          break ;
-        case 3 : 
-            afficherTicket()
-          break ;
-        case 4 : 
-
-          break ;
-        case 5 : 
-
-          break ;
-        case 6 : 
-
-          break ;
-        case 7 : 
-
-          break ;
-        case 0 : 
-
-          break ;
-        default :
-        console.log("")
-        
-      }
-    }
-}
 //1st fct menu
 function afficheUnTrajet(){
     for(let i=0 ; i<trips.length ; i++ ){
@@ -244,9 +193,10 @@ function afficheUnTrajet(){
     console.log("Prix : " + trips[i].price + " DH | Places disponibles : " + trips[i].availableSeats);
     console.log("________________________________")
       }
+      
+      
+      return afficherMenuPrincipal();
     }
-    
-    
     
     
     
@@ -299,14 +249,21 @@ function acheterTicket() {
   console.log("Trajet : " + trajetTrouve.departure + " --> " + trajetTrouve.destination);
   console.log("Place : " + nouveauTicket.seatNumber);
   console.log("Prix : " + nouveauTicket.price + " DH");
+}
 
 
+ 
 
- //  3rd l'affichage 
+
+//  3rd l'affichage 
    
 function afficherTicket() {
     console.log("=== TICKETS ==="); 
-
+     // verif si ticket est vide
+    if (tickets.length === 0) {
+        console.log("Aucun ticket enregistré.");
+        return;
+    }
     // On parcourt tous les tickets existants
     for (let i = 0; i < tickets.length; i++) {
         let trajetAssocier = null;
@@ -317,13 +274,62 @@ function afficherTicket() {
                 break;
             }
         }
+        if (trajetAssocier){
         console.log("Ticket #" + tickets[i].id);
         console.log("Passager : " + tickets[i].passengerName);
         console.log("Trajet : " + trajetAssocier.departure + " --> " + trajetAssocier.destination);
         console.log("Place : " + tickets[i].seatNumber);
         console.log("Prix : " + tickets[i].price + " DH");
        
-    }
-  }  
+    }  
 }
-afficherMenuPrincipal()
+}
+
+// Boucle du menu principale et des choix 
+function afficherMenuPrincipal(){
+    while(1){
+       console.log("=================================");
+       console.log("        RAILWAY MANAGER");
+       console.log("=================================");
+       console.log("1. Afficher les trajets");
+       console.log("2. Acheter un ticket");
+       console.log("3. Afficher les tickets");
+       console.log("4. Annuler un ticke");
+       console.log("5. Rechercher un ticket");
+       console.log("6. Filtrer les trajets");
+       console.log("7. Trier les trajets");
+       console.log("0. Quitter");
+    
+    
+    const choix = Number(prompt("Votre choix : "));
+
+    switch(choix){
+        case 1 : 
+            afficheUnTrajet();
+            break ;
+        case 2 : 
+            acheterTicket();
+            break ;
+        case 3 : 
+            afficherTicket();
+          break ;
+        case 4 : 
+
+          break ;
+        case 5 : 
+
+          break ;
+        case 6 : 
+
+          break ;
+        case 7 : 
+
+          break ;
+        case 0 : return;
+        default :
+        console.log("")
+        
+      }
+    }
+}
+afficherMenuPrincipal();
