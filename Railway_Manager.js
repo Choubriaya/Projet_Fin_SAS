@@ -285,6 +285,39 @@ function afficherTicket() {
 }
 }
 
+// 4rth fct annulation 
+function annulerTicket(){
+    console.log("===ANNULER UN TICKET===");
+
+   if (tickets.length===0){
+    console.log("Aucun ticket à annuler.");
+   }
+   const idtickets = Number(prompt("Entrez l'identifiant du ticket à annuler :"));
+   let indexTicket = -1 ;
+   for(let i=0 ; i<tickets.length; i++){
+    if(tickets[i].id===idtickets){
+        indexTicket = i ;
+        break ; // quitte la boucle
+     }
+   }
+   if(indexTicket== -1){
+    console.log("ticket introuvable");
+    return ;  // quitte la fct 
+   }
+   const ticketAnnule = tickets[indexTicket];
+   for (let j = 0 ; j < trips.length; j++){
+    if(trips[j].id===ticketAnnule.tripId){
+    trips[j].availableSeats += 1 ;
+    break ; 
+    }
+   }
+   tickets.splice(indexTicket,1);
+   console.log("Ticket #" + idtickets +" à été annulé avec sucée.");
+}
+
+ 
+
+
 // Boucle du menu principale et des choix 
 function afficherMenuPrincipal(){
     while(1){
@@ -314,7 +347,7 @@ function afficherMenuPrincipal(){
             afficherTicket();
           break ;
         case 4 : 
-
+            annulerTicket();
           break ;
         case 5 : 
 
@@ -325,7 +358,8 @@ function afficherMenuPrincipal(){
         case 7 : 
 
           break ;
-        case 0 : return;
+        case 0 :
+             return;
         default :
         console.log("")
         
