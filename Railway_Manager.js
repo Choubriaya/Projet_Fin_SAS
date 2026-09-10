@@ -185,6 +185,7 @@ const trips = [
         availableSeats: 50
     }
 ];
+
 //1st fct menu
 function afficheUnTrajet(){
     for(let i=0 ; i<trips.length ; i++ ){
@@ -204,9 +205,15 @@ function afficheUnTrajet(){
     // 2nd fct achat de ticket 
 function acheterTicket() {
   console.log("=== ACHETER UN TICKET ===");
-  const nomPassager = prompt("Nom du passager : ").trim();
-  const idTrajet = Number(prompt("Identifiant du trajet : "));   
 
+  let nomPassager = prompt("Nom du passager : ").trim();
+      while (nomPassager === "") {
+  nomPassager = prompt("Nom invalide ! Veuillez reessayer : ").trim();
+}
+
+console.log("Nom valide : " + nomPassager);
+
+const idTrajet = Number(prompt("Identifiant du trajet : "));   
 
   let trajetTrouve=null;
   for (let i = 0; i < trips.length; i++) {
@@ -315,6 +322,9 @@ function annulerTicket(){
    console.log("Ticket #" + idtickets +" à été annulé avec sucée.");
 }
 
+
+
+//chercher un ticket 
  
 
 
