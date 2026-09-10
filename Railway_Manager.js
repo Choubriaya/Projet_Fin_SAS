@@ -352,11 +352,26 @@ function chercherTicket(){
      }
     if (nombreTrouve === 0){
         console.log("Aucun ticket trouvé pour : "+nomRecherche);
-    }
-     
+    }    
 } 
 
 
+// 6th Filtrer les trajets
+function filtrerTrajet (){
+    console.log("====FILTRER LES TRAJETS===="); 
+    const villeDepart = prompt("ville de départ : ").trim().toLowerCase();
+    const trajetFiltre = trips.filter(trajet=>trajet.departure.toLowerCase()===villeDepart);
+    
+    if(trajetFiltre.length===0){
+        console.log("Aucun trajet de la ville : ",villeDepart)
+    }
+    console.log("Résultat : ");
+    for(let i=0;i<trajetFiltre.length ;i++){
+        console.log(trajetFiltre[i].departure +" --> " + trajetFiltre[i].destination +" : " +trajetFiltre[i].price +"DH");
+    }
+    return ;
+}
+ 
 
 // Boucle du menu principale et des choix 
 function afficherMenuPrincipal(){
@@ -393,7 +408,7 @@ function afficherMenuPrincipal(){
             chercherTicket();
           break ;
         case 6 : 
-
+            filtrerTrajet ();
           break ;
         case 7 : 
 
