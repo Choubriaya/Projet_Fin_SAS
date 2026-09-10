@@ -371,9 +371,28 @@ function filtrerTrajet (){
     }
     return ;
 }
- 
+ // 7th fuction Trier les trajets
+function trierTrajet (){
+    console.log("====TRIER LES TRAJETS====");
+    const trajetTrie = [...trips];
 
-// Boucle du menu principale et des choix 
+    for(let i=0 ; i<trajetTrie.length-1; i++){
+        for(let j=0 ; j<trajetTrie.length-i-1; j++){
+            if(trajetTrie[j].price>trajetTrie[j+1].price){
+                const valeur = trajetTrie[j];
+                trajetTrie[j] = trajetTrie[j+1];
+                trajetTrie[j+1] = valeur ;
+            }
+        }
+
+    }
+    console.log("Résultat : ");
+    for(let i=0;i<trajetTrie.length ;i++){
+    console.log(trajetTrie[i].departure +" --> " + trajetTrie[i].destination +" : " +trajetTrie[i].price +"DH");
+ }
+}
+
+// Boucle du menu principale et choix 
 function afficherMenuPrincipal(){
     while(1){
        console.log("=================================");
@@ -411,12 +430,12 @@ function afficherMenuPrincipal(){
             filtrerTrajet ();
           break ;
         case 7 : 
-
+            trierTrajet ();
           break ;
         case 0 :
              return;
         default :
-        console.log("")
+        console.log("Option invalide ! veillez choisir un nombre du menu.")
         
       }
     }
