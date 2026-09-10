@@ -201,7 +201,6 @@ function afficheUnTrajet(){
     
     
     
-    
     // 2nd fct achat de ticket 
 function acheterTicket() {
   console.log("=== ACHETER UN TICKET ===");
@@ -259,7 +258,6 @@ const idTrajet = Number(prompt("Identifiant du trajet : "));
 }
 
 
- 
 
 
 //  3rd l'affichage 
@@ -324,8 +322,40 @@ function annulerTicket(){
 
 
 
-//chercher un ticket 
- 
+// 5th fct chercher un ticket
+function chercherTicket(){
+    console.log("====CHERCHER UN TICKET===="); 
+
+     if(tickets.length===0){
+        console.log("Aucun ticket trouvé .")
+     }
+     const nomRecherche = prompt("Nom du passager : ").trim().toLowerCase();
+    
+     let nombreTrouve = 0 ;
+     for(let i=0 ; i<tickets.length ; i++){
+        if(tickets[i].passengerName.toLowerCase()===nomRecherche){
+            let trajetAssocier = null ;
+            for(let j=0 ; j<trips.length;j++){
+                if(trips[j].id===tickets[i].tripId){
+                    trajetAssocier = trips[i];
+                    break ;
+                }
+            }
+     console.log("Ticket #" + tickets[i].id);
+     console.log("Passager : " + tickets[i].passengerName);
+     console.log("Trajet : " + trajetAssocier.departure + " --> " + trajetAssocier.destination);
+     console.log("Place : " + tickets[i].seatNumber);
+     console.log("Prix : " + tickets[i].price + " DH");
+
+     nombreTrouve ++ ;
+        }
+     }
+    if (nombreTrouve === 0){
+        console.log("Aucun ticket trouvé pour : "+nomRecherche);
+    }
+     
+} 
+
 
 
 // Boucle du menu principale et des choix 
@@ -337,7 +367,7 @@ function afficherMenuPrincipal(){
        console.log("1. Afficher les trajets");
        console.log("2. Acheter un ticket");
        console.log("3. Afficher les tickets");
-       console.log("4. Annuler un ticke");
+       console.log("4. Annuler un ticket");
        console.log("5. Rechercher un ticket");
        console.log("6. Filtrer les trajets");
        console.log("7. Trier les trajets");
@@ -360,7 +390,7 @@ function afficherMenuPrincipal(){
             annulerTicket();
           break ;
         case 5 : 
-
+            chercherTicket();
           break ;
         case 6 : 
 
