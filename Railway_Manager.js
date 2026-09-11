@@ -1,5 +1,6 @@
 const prompt = require ('prompt-sync')();
 const tickets =[] ;
+const deletedTickets = [];
 let nextIdTicket = 1 ;
 const trips = [
     {
@@ -238,36 +239,40 @@ const idTrajet = Number(prompt("Identifiant du trajet : "));
         console.log("Choix invalide !");
     }
   }
-  
-    let PlaceVendue  = 50 - trajetTrouve.availableSeats + 1;
-    trajetTrouve.availableSeats -= 1;
-   
+    
  
   const nouveauTicket= {
-     id : nextIdTicket,
+     id : nextIdTicket++,
      passengerName :nomPassager,
      tripId : trajetTrouve.id,
-     seatNumber : PlaceVendue, 
      price : trajetTrouve.price 
-  };
-  
- tickets.push(nouveauTicket);
- nextIdTicket++ ;
-  console.log("");
-  console.log("____________________________");
-  console.log("Ticket acheté avec succès.");
-  console.log("Ticket #" + nouveauTicket.id);
-  console.log("Passager : " + nouveauTicket.passengerName);
-  console.log("Trajet : " + trajetTrouve.departure + " --> " + trajetTrouve.destination);
-  console.log("Place : " + nouveauTicket.seatNumber);
-  console.log("Prix : " + nouveauTicket.price + " DH");
+    };
+    let deletedExiste  = deletedTickets.find(ticket => ticket.tripId === idTrajet);
+    if(deletedExiste){
+        nouveauTicket.seatNumber = deletedExiste.seatNumber;
+        let i = deletedTickets.indexOf(deletedExiste);
+        deletedTickets.splice(i,1);
+    }
+    else{
+        nouveauTicket.seatNumber  = 50 - trajetTrouve.availableSeats + 1;
+    }
+    trajetTrouve.availableSeats -= 1;
+    tickets.push(nouveauTicket);
+    console.log("");
+    console.log("____________________________");
+    console.log("Ticket acheté avec succès.");
+    console.log("Ticket #" + nouveauTicket.id);
+    console.log("Passager : " + nouveauTicket.passengerName);
+    console.log("Trajet : " + trajetTrouve.departure + " --> " + trajetTrouve.destination);
+    console.log("Place : " + nouveauTicket.seatNumber);
+    console.log("Prix : " + nouveauTicket.price + " DH");
 
-  while(1){
+    while(1){
         let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
         if(c == 0)
             return afficherMenuPrincipal();
         console.log("Choix invalide !");
-      }
+        }
 }
 
 function afficherTicket() {
@@ -339,17 +344,12 @@ function annulerTicket(){
         console.log("Choix invalide !");
       }
    }
-   const ticketAnnule = tickets[indexTicket];
-   for (let j = 0 ; j < trips.length; j++){
-    if(trips[j].id===ticketAnnule.tripId){
-        trips[j].availableSeats += 1 ;
-        break ; 
-    }
-   }
-   tickets.splice(indexTicket,1);
-   console.log("____________________________");
-   console.log("Ticket #" + idtickets +" à été annulé avec sucée.");
-   while(1){
+    deletedTickets.push(tickets[indexTicket]);
+    trips[tickets[indexTicket].tripId - 1].availableSeats++;
+    tickets.splice(indexTicket,1);
+    console.log("____________________________");
+    console.log("Ticket #" + idtickets +" à été annulé avec sucée.");
+    while(1){
         let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
         if(c == 0)
             return afficherMenuPrincipal();
@@ -460,26 +460,19 @@ function afficherMenuPrincipal(){
 
     switch(choix){
         case 1 : 
-            afficheUnTrajet();
-            break ;
+            return (afficheUnTrajet());
         case 2 : 
-            acheterTicket();
-            break ;
+            return (acheterTicket());
         case 3 : 
-            afficherTicket();
-          break ;
+            return (afficherTicket());
         case 4 : 
-            annulerTicket();
-          break ;
+            return (annulerTicket());
         case 5 : 
-            chercherTicket();
-          break ;
+            return (chercherTicket());
         case 6 : 
-            filtrerTrajet ();
-          break ;
+            return (filtrerTrajet ());
         case 7 : 
-            trierTrajet ();
-          break ;
+            return (trierTrajet ());
         case 0 : return;
         default :
         console.log("Option invalide ! veillez choisir un nombre du menu.")
