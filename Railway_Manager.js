@@ -1,8 +1,6 @@
-// importation des modules 
 const prompt = require ('prompt-sync')();
 const tickets =[] ;
 let nextIdTicket = 1 ;
-// données
 const trips = [
     {
         id: 1,
@@ -186,7 +184,6 @@ const trips = [
     }
 ];
 
-//1st fct menu
 function afficheUnTrajet(){
     for(let i=0 ; i<trips.length ; i++ ){
     console.log("________________________________")
@@ -196,18 +193,14 @@ function afficheUnTrajet(){
     console.log("________________________________")
       }
       
-      
-      while(1){
-        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+    while(1){
+        let c = Number(prompt("tapez 0 pour revenir au menu principal : "));
         if(c == 0)
             return afficherMenuPrincipal();
         console.log("Choix invalide !");
       }
     }
     
-    
-    
-    // 2nd fct achat de ticket 
 function acheterTicket() {
   console.log("=== ACHETER UN TICKET ===");
 
@@ -218,32 +211,38 @@ function acheterTicket() {
 
 console.log("Nom valide : " + nomPassager);
 
-const idTrajet = Number(prompt("Identifiant du trajet : "));   
+const idTrajet = Number(prompt("Identifiant du trajet : ")); 
 
-  let trajetTrouve=null;
+  let trajetTrouve = null;
   for (let i = 0; i < trips.length; i++) {
      if(trips[i].id === idTrajet){
         trajetTrouve =trips[i];
         break;
      }
   } 
-    // checher l'existance du trajet 
   if (trajetTrouve===null){
     console.log("Trajet introuvable");
-    return;
+     while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+    }
   }
-  
   if (trajetTrouve.availableSeats <= 0){
     console.log("Train complet !!");
-    return; 
+    while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+    }
   }
   
-  // les places qui diminuent 
-  let PlaceVendue  = 50 - trajetTrouve.availableSeats + 1; // fixer apres affiche tjr " Place : 50 "
-  trajetTrouve.availableSeats -= 1;
+    let PlaceVendue  = 50 - trajetTrouve.availableSeats + 1;
+    trajetTrouve.availableSeats -= 1;
    
-  
-// mon objet ticket 
+ 
   const nouveauTicket= {
      id : nextIdTicket,
      passengerName :nomPassager,
@@ -271,19 +270,18 @@ const idTrajet = Number(prompt("Identifiant du trajet : "));
       }
 }
 
-
-
-
-//  3rd l'affichage 
-   
 function afficherTicket() {
     console.log("=== TICKETS ==="); 
-     // verif si ticket est vide
+
     if (tickets.length === 0) {
         console.log("Aucun ticket enregistré.");
-        return;
+           while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      } 
     }
-    // On parcourt tous les tickets existants
     for (let i = 0; i < tickets.length; i++) {
         let trajetAssocier = null;
 
@@ -312,7 +310,6 @@ function afficherTicket() {
       }
 }
 
-// 4rth fct annulation 
 function annulerTicket(){
     console.log("===ANNULER UN TICKET===");
 
@@ -345,11 +342,12 @@ function annulerTicket(){
    const ticketAnnule = tickets[indexTicket];
    for (let j = 0 ; j < trips.length; j++){
     if(trips[j].id===ticketAnnule.tripId){
-    trips[j].availableSeats += 1 ;
-    break ; 
+        trips[j].availableSeats += 1 ;
+        break ; 
     }
    }
    tickets.splice(indexTicket,1);
+   console.log("____________________________");
    console.log("Ticket #" + idtickets +" à été annulé avec sucée.");
    while(1){
         let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
@@ -359,9 +357,6 @@ function annulerTicket(){
       }
 }
 
-
-
-// 5th fct chercher un ticket
 function chercherTicket(){
     console.log("====CHERCHER UN TICKET===="); 
 
@@ -380,6 +375,7 @@ function chercherTicket(){
                     break ;
                 }
             }
+     console.log("____________________________");
      console.log("Ticket #" + tickets[i].id);
      console.log("Passager : " + tickets[i].passengerName);
      console.log("Trajet : " + trajetAssocier.departure + " --> " + trajetAssocier.destination);
@@ -401,8 +397,6 @@ function chercherTicket(){
       }
 } 
 
-
-// 6th Filtrer les trajets
 function filtrerTrajet (){
     console.log("====FILTRER LES TRAJETS===="); 
     const villeDepart = prompt("ville de départ : ").trim().toLowerCase();
@@ -422,7 +416,6 @@ function filtrerTrajet (){
         console.log("Choix invalide !");
       }
 }
- // 7th fuction Trier les trajets
 function trierTrajet (){
     console.log("====TRIER LES TRAJETS====");
     const trajetTrie = [...trips];
@@ -433,9 +426,8 @@ function trierTrajet (){
                 const valeur = trajetTrie[j];
                 trajetTrie[j] = trajetTrie[j+1];
                 trajetTrie[j+1] = valeur ;
-            }
+            } 
         }
-
     }
     console.log("Résultat : ");
     for(let i=0;i<trajetTrie.length ;i++){
@@ -449,7 +441,6 @@ function trierTrajet (){
       }
 }
 
-// Boucle du menu principale et choix 
 function afficherMenuPrincipal(){
     while(1){
        console.log("=================================");
@@ -489,11 +480,10 @@ function afficherMenuPrincipal(){
         case 7 : 
             trierTrajet ();
           break ;
-        case 0 :
-             return;
+        case 0 : return;
         default :
         console.log("Option invalide ! veillez choisir un nombre du menu.")
-        
+     
       }
     }
 }
