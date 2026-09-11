@@ -189,6 +189,7 @@ const trips = [
 //1st fct menu
 function afficheUnTrajet(){
     for(let i=0 ; i<trips.length ; i++ ){
+    console.log("________________________________")
     console.log("#" + trips[i].id + " " + trips[i].departure + "--> " + trips[i].destination);
     console.log("Départ : " + trips[i].departureTime + "| Arrivée : " + trips[i].arrivalTime);
     console.log("Prix : " + trips[i].price + " DH | Places disponibles : " + trips[i].availableSeats);
@@ -196,7 +197,12 @@ function afficheUnTrajet(){
       }
       
       
-      return afficherMenuPrincipal();
+      while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
     }
     
     
@@ -248,13 +254,21 @@ const idTrajet = Number(prompt("Identifiant du trajet : "));
   
  tickets.push(nouveauTicket);
  nextIdTicket++ ;
-
+  console.log("");
+  console.log("____________________________");
   console.log("Ticket acheté avec succès.");
   console.log("Ticket #" + nouveauTicket.id);
   console.log("Passager : " + nouveauTicket.passengerName);
   console.log("Trajet : " + trajetTrouve.departure + " --> " + trajetTrouve.destination);
   console.log("Place : " + nouveauTicket.seatNumber);
   console.log("Prix : " + nouveauTicket.price + " DH");
+
+  while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
 }
 
 
@@ -280,14 +294,22 @@ function afficherTicket() {
             }
         }
         if (trajetAssocier){
+        console.log("");
+        console.log("____________________________");
         console.log("Ticket #" + tickets[i].id);
         console.log("Passager : " + tickets[i].passengerName);
         console.log("Trajet : " + trajetAssocier.departure + " --> " + trajetAssocier.destination);
         console.log("Place : " + tickets[i].seatNumber);
         console.log("Prix : " + tickets[i].price + " DH");
        
-    }  
-}
+        }  
+    }
+    while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
 }
 
 // 4rth fct annulation 
@@ -296,18 +318,29 @@ function annulerTicket(){
 
    if (tickets.length===0){
     console.log("Aucun ticket à annuler.");
+    while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
    }
    const idtickets = Number(prompt("Entrez l'identifiant du ticket à annuler :"));
    let indexTicket = -1 ;
    for(let i=0 ; i<tickets.length; i++){
     if(tickets[i].id===idtickets){
         indexTicket = i ;
-        break ; // quitte la boucle
+        break ; 
      }
    }
    if(indexTicket== -1){
     console.log("ticket introuvable");
-    return ;  // quitte la fct 
+    while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
    }
    const ticketAnnule = tickets[indexTicket];
    for (let j = 0 ; j < trips.length; j++){
@@ -318,6 +351,12 @@ function annulerTicket(){
    }
    tickets.splice(indexTicket,1);
    console.log("Ticket #" + idtickets +" à été annulé avec sucée.");
+   while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
 }
 
 
@@ -352,7 +391,14 @@ function chercherTicket(){
      }
     if (nombreTrouve === 0){
         console.log("Aucun ticket trouvé pour : "+nomRecherche);
-    }    
+    }   
+    
+    while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
 } 
 
 
@@ -369,7 +415,12 @@ function filtrerTrajet (){
     for(let i=0;i<trajetFiltre.length ;i++){
         console.log(trajetFiltre[i].departure +" --> " + trajetFiltre[i].destination +" : " +trajetFiltre[i].price +"DH");
     }
-    return ;
+     while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
 }
  // 7th fuction Trier les trajets
 function trierTrajet (){
@@ -389,7 +440,13 @@ function trierTrajet (){
     console.log("Résultat : ");
     for(let i=0;i<trajetTrie.length ;i++){
     console.log(trajetTrie[i].departure +" --> " + trajetTrie[i].destination +" : " +trajetTrie[i].price +"DH");
- }
+    }
+    while(1){
+        let c= Number(prompt("tapez 0 pour revenir au menu principal : "));
+        if(c == 0)
+            return afficherMenuPrincipal();
+        console.log("Choix invalide !");
+      }
 }
 
 // Boucle du menu principale et choix 
